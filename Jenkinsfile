@@ -1,7 +1,5 @@
 pipeline {
-    agent { label 'Agent3'}
-    tools {
-        gradle '7.5.1'
+    agent any {
     } 
     environment {
         //be sure to replace "bhavukm" with your own Docker Hub username
