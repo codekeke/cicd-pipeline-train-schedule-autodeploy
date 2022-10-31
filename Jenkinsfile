@@ -1,6 +1,8 @@
 pipeline {
-    agent any {
-    } 
+    agent { label 'Agent3' }
+    tools {
+       gradle '7.5.1'
+    }     
     environment {
         //be sure to replace "bhavukm" with your own Docker Hub username
         DOCKER_IMAGE_NAME = "bhavukm/train-schedule"
