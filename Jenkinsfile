@@ -11,7 +11,6 @@ pipeline {
         registryCredential = 'DockerHub'
         dockerImage = ''
                 }    
-    }
   stages {
         stage('GIT Clone') {
             steps {
