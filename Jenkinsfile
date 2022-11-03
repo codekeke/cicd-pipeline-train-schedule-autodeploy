@@ -4,10 +4,20 @@ pipeline {
        gradle '7.5.1'
     }     
     environment {
-        //be sure to replace "bhavukm" with your own Docker Hub username
-        DOCKER_IMAGE_NAME = "bhavukm/train-schedule"
+        //- be sure to replace "bhavukm" with your own Docker Hub username
+        DOCKER_IMAGE_NAME = "knj15955/train-schedule"
+        registry = "knj15955/edureka_schedule_autodeploy"
+        //- update your credentials ID after creating credentials for connecting to Docker Hub
+        registryCredential = 'DockerHub'
+        dockerImage = ''
+                }    
     }
-    stages {
+  stages {
+        stage('GIT Clone') {
+            steps {
+                git branch: "master", url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Running build automation'
