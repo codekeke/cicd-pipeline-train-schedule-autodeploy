@@ -5,11 +5,11 @@ pipeline {
     }     
     environment {
         //- be sure to replace "bhavukm" with your own Docker Hub username
-        DOCKER_IMAGE_NAME = "knj15955/train-schedule"
-        registry = "knj15955/edureka_schedule_autodeploy"
+         dockerImage = 'knj15955/train-schedule'
+        registry = 'knj15955/edureka_schedule_autodeploy'
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         registryCredential = 'DockerHub'
-        dockerImage = ''
+       
                 }    
   stages {
         stage('GIT Clone') {
