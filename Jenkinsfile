@@ -8,13 +8,13 @@ pipeline {
          dockerImage = 'knj15955/train-schedule'
         registry = 'knj15955/edureka_schedule_autodeploy'
         //- update your credentials ID after creating credentials for connecting to Docker Hub
-        registryCredential = 'DockerHub'
+        DOCKERHUB_CREDENTIALS = credentials ('dckrhub_PAT')
        
                 }    
   stages {
-        stage('GIT Clone') {
+        stage('Check Out') {
             steps {
-                git branch: "master", url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git']]])
             }
         }
         stage('Build') {
@@ -29,25 +29,21 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    app = docker.build(DOCKER_IMAGE_NAME)
-                    app.inside {
-                        sh 'echo Hello, World!'
-                    }
+                sh "sudo docker build -t knj15955/train-schedule-1.0 ."
                 }
-            }
-        }
+         }
+         stage('Login Docker Hub') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u knj15955 --password-stdin'
+		}
+	}
         stage('Push Docker Image') {
             when {
                 branch 'master'
             }
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
-                }
+                 sh "sudo docker push knj15955/my-app-1.0:latest"
+                 }
             }
         }
         stage('CanaryDeploy') {
