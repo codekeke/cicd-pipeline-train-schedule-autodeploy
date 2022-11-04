@@ -82,6 +82,5 @@ pipeline {
                     enableConfigSubstitution: true
              )
             }
-        }
     }
 }
