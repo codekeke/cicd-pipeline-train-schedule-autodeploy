@@ -3,6 +3,10 @@ plugins {
   id "com.github.node-gradle.node" version "3.5.0"
 }
 
+plugins {
+  id 'war'
+}
+
 node {
 	download = true
 	version = "9.11.1"
