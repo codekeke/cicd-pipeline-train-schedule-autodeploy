@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'Agent3' }
+    agent { label 'kube1' }
     tools {
        gradle '7.5.1'
     }     
@@ -22,12 +22,9 @@ pipeline {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
-            }
+                }
         }
         stage('Build Docker Image') {
-            when {
-                branch 'master'
-            }
             steps {
                 sh "sudo docker build -t knj15955/train-schedule-1.0 ."
                 }
@@ -38,13 +35,9 @@ pipeline {
 		}
 	}
         stage('Push Docker Image') {
-            when {
-                branch 'master'
-            }
             steps {
-                 sh "sudo docker push knj15955/my-app-1.0:latest"
+                 sh "sudo docker push knj15955/train-schedule-1.0:latest"
                  }
-            }
         }
         stage('CanaryDeploy') {
             when {
