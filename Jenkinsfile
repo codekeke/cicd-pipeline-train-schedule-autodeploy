@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'kube1' }
+    agent { label 'Test_Server' }
     tools {
        gradle '7.5.1'
     }     
@@ -40,9 +40,7 @@ pipeline {
                  }
         }
         stage('CanaryDeploy') {
-            when {
-                branch 'master'
-            }
+            agent { label 'kube1' }
             environment { 
                 CANARY_REPLICAS = 1
             }
@@ -55,9 +53,7 @@ pipeline {
             }
         }
     stage('DeployToProduction') {
-            when {
-                branch 'master'
-            }
+            agent {label 'kube1' }
             environment { 
                 CANARY_REPLICAS = 0
             }
