@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'Test_Server' }
+    agent any
     tools {
        gradle '7.5.1'
     }     
@@ -8,7 +8,7 @@ pipeline {
          dockerImage = 'knj15955/train-schedule'
         registry = 'knj15955/edureka_schedule_autodeploy'
         //- update your credentials ID after creating credentials for connecting to Docker Hub
-        DOCKERHUB_CREDENTIALS = credentials ('dckrhub_PAT')
+        DOCKERHUB_CREDENTIALS = credentials ('knj-dockerhub')
        
                 }    
   stages {
@@ -40,7 +40,6 @@ pipeline {
                  }
         }
         stage('CanaryDeploy') {
-            agent { label 'kube1' }
             environment { 
                 CANARY_REPLICAS = 1
             }
@@ -52,8 +51,7 @@ pipeline {
                 )
             }
         }
-    stage('DeployToProduction') {
-            agent {label 'kube1' }
+        stage('DeployToProduction') {
             environment { 
                 CANARY_REPLICAS = 0
             }
@@ -70,6 +68,7 @@ pipeline {
                     configs: 'train-schedule-kube.yml',
                     enableConfigSubstitution: true
              )
-            }
-    }
+	    }
+	}
+   }
 }
