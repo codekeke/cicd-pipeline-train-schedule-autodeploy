@@ -48,3 +48,14 @@ spec:
         resources:
           requests:
             cpu: 200m
+        env:
+        - name: CONF_USER
+          valueFrom: 
+             configMapKeyRef: 
+                     name: user-cred
+                     key: user
+        - name: UPASS
+          valueFrom:
+             secretKeyRef:
+                     name: my-secret
+                     key: password
