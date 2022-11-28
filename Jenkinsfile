@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'Test_Server'}
+    any
     tools {
        gradle '7.5.1'
     }     
@@ -40,9 +40,8 @@ pipeline {
                  }
         }
         stage('CanaryDeploy') {
-	    agent { label 'kube1'}
-            environment { 
-                CANARY_REPLICAS = 1
+	    environment { 
+            CANARY_REPLICAS = 1
             }
             steps {
                 kubernetesDeploy(
@@ -53,9 +52,8 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-	   agent { label 'kube'}
 	   environment { 
-                CANARY_REPLICAS = 0
+           CANARY_REPLICAS = 0
             }
             steps {
                 input 'Deploy to Production?'
