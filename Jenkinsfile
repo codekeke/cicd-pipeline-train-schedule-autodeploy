@@ -14,7 +14,7 @@ pipeline {
   stages {
         stage('Check Out') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git']]])
+                credentialsId: 'github-psswd', url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git'
             }
         }
         stage('Build') {
