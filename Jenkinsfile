@@ -14,7 +14,7 @@ pipeline {
   stages {
         stage('Check Out') {
             steps {
-                credentialsId: 'github-psswd', url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git'
+                git credentialsId: 'github-psswd', url: 'https://github.com/codekeke/cicd-pipeline-train-schedule-autodeploy.git'
             }
         }
         stage('Build') {
