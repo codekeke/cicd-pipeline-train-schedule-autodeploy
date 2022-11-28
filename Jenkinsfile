@@ -1,11 +1,10 @@
 pipeline {
-    agent any
+	agent { label 'Test_Server'} 
     tools {
        gradle '7.5.1'
     }     
     environment {
-        //- be sure to replace "bhavukm" with your own Docker Hub username
-         dockerImage = 'knj15955/train-schedule'
+        dockerImage = 'knj15955/train-schedule-1.0:latest'
         registry = 'knj15955/edureka_schedule_autodeploy'
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         DOCKERHUB_CREDENTIALS = credentials ('knj-dockerhub')
