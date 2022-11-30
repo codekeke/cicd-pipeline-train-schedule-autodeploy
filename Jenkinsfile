@@ -39,7 +39,8 @@ pipeline {
                  }
         }
         stage('CanaryDeploy') {
-	    environment { 
+	   agent { label 'Kube1'} 
+	   environment { 
             CANARY_REPLICAS = 1
             }
             steps {
@@ -51,6 +52,7 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
+	   agent { label 'Kube1'} 
 	   environment { 
            CANARY_REPLICAS = 0
             }
