@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: train-schedule-service-canary
-  namespace: canary
+  namespace: devops
 spec:
   type: NodePort
   selector:
